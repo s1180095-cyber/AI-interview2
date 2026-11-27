@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="根据四张设计稿还原的 AI 模拟面试交互原型，纯静态，可直接部署到 GitHub Pages。" />
+  <title>AI 模拟面试 · 交互原型</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.8 12 3.5l8.5 7.3V20a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v17H7.5A2.5 2.5 0 0 0 5 21.5Z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15H19"/><path d="M9 7h6M9 11h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="2"/><rect x="14" y="4" width="6" height="6" rx="2"/><rect x="4" y="14" width="6" height="6" rx="2"/><rect x="14" y="14" width="6" height="6" rx="2"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="3"/><path d="M9 4V2.8h6V4"/><path d="M9 10h6M9 14h6M9 18h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M8 14h3M8 17h7"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c4.5 0 6.5 10 11 10H21"/><path d="m18 14 3 3-3 3"/><path d="M3 17h3.5c1.8 0 3.1-1.6 4.3-3.7"/><path d="M14 8.5c1-1 2-1.5 3.5-1.5H21"/><path d="m18 4 3 3-3 3"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9Z"/><path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7Z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6Z"/><path d="M14 3v5h4"/><path d="M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4M12 14v4M8 21h8M9 18h6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 16V3m0 0L8 7m4-4 4 4"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.7 6.3.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.3-.9Z"/></symbol>
+    <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="M20 11.5 12.2 19a5 5 0 0 1-7.1-7.1l8-8a3.4 3.4 0 0 1 4.8 4.8l-8 8a1.8 1.8 0 0 1-2.5-2.5l7.2-7.2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M3 18 8.5 5 14 18M5.2 13.5h6.6"/><path d="M17 10h5M19.5 10v8"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 10v4M7 6v12M11 3v18M15 7v10M19 10v4"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 22c4 0 6.5-2.7 6.5-6.3 0-4.7-4.3-6.3-3.6-11.7-3.2 1.3-5.4 4.2-5.4 7.2 0 1.2-.8 2-1.7 2-1 0-1.6-.8-1.6-2C4.9 13 5.5 22 12 22Z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 5 13h6l-1 9 8-11h-6Z"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 2.8 8.2 7 10 4.2-1.8 7-5.5 7-10V6Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7 2.5C19 15.6 12 20 12 20Z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m9 8-4 4 4 4M15 8l4 4-4 4M13.5 5l-3 14"/></symbol>
+    <symbol id="i-string" viewBox="0 0 24 24"><path d="M3 18 8 6l5 12M5 14h6"/><path d="M15 10h6M18 10v8"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M6 16v-2h12v2"/></symbol>
+    <symbol id="i-array" viewBox="0 0 24 24"><rect x="3" y="5" width="4" height="14" rx="1"/><rect x="10" y="5" width="4" height="14" rx="1"/><rect x="17" y="5" width="4" height="14" rx="1"/></symbol>
+    <symbol id="i-behavior" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="m16 6 5 2-5 2"/></symbol>
+    <symbol id="i-hr" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 19c0-3.6 2.9-6 6.5-6 2 0 3.8.7 5 2"/><path d="m15 17 2 2 4-4"/></symbol>
+    <symbol id="i-group" viewBox="0 0 24 24"><circle cx="8" cy="8" r="2.8"/><circle cx="17" cy="9" r="2.4"/><path d="M3 18c0-2.9 2.2-4.8 5-4.8s5 1.9 5 4.8M14 18c0-2.2 1.4-3.7 3.3-3.7S21 15.8 21 18"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="showcase" aria-label="项目介绍">
+      <div class="showcase-inner">
+        <div class="brand">
+          <div class="brand-mark"><svg class="icon"><use href="#i-spark"/></svg></div>
+          <div>
+            <div class="brand-title">AI 模拟面试</div>
+            <div class="brand-sub">INTERACTIVE PROTOTYPE</div>
+          </div>
+        </div>
+
+        <h1 class="showcase-h1">四张设计稿<br />一套可跑的交互</h1>
+        <p class="showcase-desc">按「首页 / AI 题库 / 面试中 / 面试报告」四张界面稿还原，包含搜索筛选、随机练习、语音模拟、答题流转与报告导出。</p>
+
+        <div class="screen-switcher" id="screenSwitcher">
+          <button class="switch-item active" data-goto="home"><span>01</span><strong>首页</strong><small>面试入口与学习概览</small></button>
+          <button class="switch-item" data-goto="bank"><span>02</span><strong>AI 题库</strong><small>搜索、分类与随机练习</small></button>
+          <button class="switch-item" data-goto="interview"><span>03</span><strong>面试中</strong><small>语音波形与作答模拟</small></button>
+          <button class="switch-item" data-goto="report"><span>04</span><strong>面试报告</strong><small>雷达图与能力分析</small></button>
+        </div>
+
+        <div class="showcase-foot">纯静态 · 无构建 · 支持 GitHub Pages<br />键盘 1 / 2 / 3 / 4 可快速切换页面</div>
+      </div>
+    </aside>
+
+    <main class="stage">
+      <div class="stage-label">AI MOCK INTERVIEW · 交互演示</div>
+      <div class="phone" id="phone">
+        <div class="phone-screen" id="phoneScreen">
+
+          <div class="status-bar" id="statusBar">
+            <span class="status-time">9:41</span>
+            <div class="status-icons" aria-hidden="true">
+              <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+              <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.2 1 4.3A10 10 0 0 1 15 4.3Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 11.2 4 7.3a5.6 5.6 0 0 1 8 0Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="9.6" r="1.3"/></svg>
+              <svg width="24" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><rect x="3" y="3" width="14" height="6" rx="1.2"/><path d="M22 4.5v3a2 2 0 0 0 0-3Z" opacity=".65"/></svg>
+            </div>
+          </div>
+
+          <!-- ========== 首页 ========== -->
+          <section class="screen active" id="screen-home" data-screen="home">
+            <div class="scroll-area home-scroll">
+              <header class="home-header">
+                <div>
+                  <h2 class="greeting">你好，张明</h2>
+                  <p class="greeting-sub">今天是你的面试准备日</p>
+                </div>
+                <button class="avatar-btn" id="avatarBtn" aria-label="个人中心">
+                  <svg class="avatar-svg" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs><linearGradient id="avatarBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#DCEBFF"/><stop offset="1" stop-color="#AFCBFF"/></linearGradient></defs>
+                    <circle cx="24" cy="24" r="24" fill="url(#avatarBg)"/>
+                    <circle cx="24" cy="19" r="8" fill="#F2C8A4"/>
+                    <path d="M15 19c0-6 4-9 9-9s9 3 9 9c-2-2.5-5-3.7-9-3.7s-7 1.2-9 3.7Z" fill="#3B302E"/>
+                    <circle cx="21" cy="19.5" r=".9" fill="#3B302E"/><circle cx="27" cy="19.5" r=".9" fill="#3B302E"/>
+                    <path d="M22 23c1.2 1 2.8 1 4 0" stroke="#B87B5E" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <path d="M11 48c1.5-10 6.5-14 13-14s11.5 4 13 14Z" fill="#3568E8"/>
+                    <path d="M20 34.5 24 40l4-5.5" fill="#fff"/>
+                  </svg>
+                  <span class="online-dot"></span>
+                </button>
+              </header>
+
+              <div class="hero-card">
+                <div class="hero-copy">
+                  <span class="hero-tag"><svg class="icon"><use href="#i-spark"/></svg> AI 智能面试</span>
+                  <h3>开始 AI 模拟面试</h3>
+                  <p>AI 全真模拟面试，助你轻松拿下心仪 Offer</p>
+                  <button class="hero-btn" id="startInterview">
+                    <svg class="icon"><use href="#i-mic"/></svg>
+                    开始面试
+                    <svg class="icon icon-sm"><use href="#i-arrow"/></svg>
+                  </button>
+                </div>
+                <div class="hero-orb" aria-hidden="true">
+                  <span class="orb-ring ring-1"></span><span class="orb-ring ring-2"></span>
+                  <span class="orb-core"></span>
+                  <svg class="brain-svg" viewBox="0 0 64 64">
+                    <path d="M31 13c-5-6-15-3-15 5-6 2-7 10-2 14-3 7 3 14 10 12 3 4 9 3 10-2V13Z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+                    <path d="M33 13c5-6 15-3 15 5 6 2 7 10 2 14 3 7-3 14-10 12-3 4-9 3-10-2V13Z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+                    <path d="M24 24c3 0 5 2 5 5s-2 4-5 4M40 24c-3 0-5 2-5 5s2 4 5 4M32 20v26" fill="none" stroke="#BFE3FF" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="metrics-card">
+                <div class="metric">
+                  <div class="metric-label"><svg class="icon"><use href="#i-chart"/></svg> 今日进度</div>
+                  <strong>3/5</strong><span>已完成 3 道面试题</span>
+                </div>
+                <div class="metric">
+                  <div class="metric-label"><svg class="icon"><use href="#i-check"/></svg> 面试分数</div>
+                  <strong>86 <em>↑12%</em></strong><span>相比上次练习</span>
+                </div>
+                <div class="metric">
+                  <div class="metric-label"><svg class="icon"><use href="#i-trophy"/></svg> 连续打卡</div>
+                  <strong>7 <small>天</small></strong><span><svg class="icon flame"><use href="#i-flame"/></svg> 连续保持！</span>
+                </div>
+              </div>
+
+              <button class="upcoming-card" id="upcomingBtn">
+                <div class="upcoming-copy">
+                  <span class="upcoming-badge"><svg class="icon"><use href="#i-bolt"/></svg> 即将开始</span>
+                  <h4>系统架构师面试</h4>
+                  <p><svg class="icon"><use href="#i-calendar"/></svg> 后天 10:00</p>
+                </div>
+                <div class="laptop-art" aria-hidden="true">
+                  <div class="laptop-screen"><span></span><span></span><span></span></div>
+                  <div class="laptop-base"></div>
+                </div>
+                <span class="upcoming-star"><svg class="icon"><use href="#i-star"/></svg></span>
+              </button>
+
+              <div class="section-head"><h3>核心功能</h3><button class="link-btn" data-goto="bank">查看全部 <svg class="icon icon-sm"><use href="#i-chevron"/></svg></button></div>
+              <div class="feature-grid">
+                <button class="feature-card" data-action="resume"><span class="feature-ico blue"><svg class="icon"><use href="#i-doc"/></svg></span><strong>简历优化</strong><small>AI 智能优化简历</small></button>
+                <button class="feature-card" data-goto="bank"><span class="feature-ico cyan"><svg class="icon"><use href="#i-layers"/></svg></span><strong>题库练习</strong><small>海量题库专项练习</small></button>
+                <button class="feature-card" data-goto="report"><span class="feature-ico indigo"><svg class="icon"><use href="#i-chart"/></svg></span><strong>面试报告</strong><small>面试表现详细分析</small></button>
+              </div>
+              <div class="bottom-space"></div>
+            </div>
+          </section>
+
+          <!-- ========== AI 题库 ========== -->
+          <section class="screen" id="screen-bank" data-screen="bank">
+            <div class="scroll-area bank-scroll">
+              <header class="bank-header">
+                <button class="bank-icon-btn" data-goto="home" aria-label="返回首页"><svg class="icon"><use href="#i-grid"/></svg></button>
+                <h2>AI 题库</h2>
+                <button class="bank-icon-btn primary" data-action="clipboard" aria-label="练习记录"><svg class="icon"><use href="#i-clipboard"/></svg></button>
+              </header>
+
+              <div class="search-box">
+                <svg class="icon"><use href="#i-search"/></svg>
+                <input id="searchInput" type="search" placeholder="搜索题目、知识点…" autocomplete="off" />
+                <svg class="icon cal-icon"><use href="#i-calendar"/></svg>
+              </div>
+
+              <div class="chip-row" id="categoryChips">
+                <button class="chip active" data-category="技术类">技术类</button>
+                <button class="chip" data-category="行为类">行为类</button>
+                <button class="chip" data-category="HR面">HR面</button>
+                <button class="chip" data-category="群面">群面</button>
+              </div>
+
+              <div class="progress-card">
+                <div class="progress-title">今日进度</div>
+                <div class="progress-grid" id="bankProgress"></div>
+              </div>
+
+              <div class="list-head"><h3>题库列表</h3><span id="resultCount">4 题</span></div>
+              <div class="question-list" id="questionList"></div>
+              <div class="bottom-space"></div>
+            </div>
+            <button class="random-fab" id="randomPractice"><svg class="icon"><use href="#i-shuffle"/></svg><span>随机练习</span></button>
+          </section>
+
+          <!-- ========== 面试中 ========== -->
+          <section class="screen" id="screen-interview" data-screen="interview">
+            <div class="interview-bg" aria-hidden="true"><i></i><i></i><i></i></div>
+            <header class="interview-header">
+              <button class="glass-icon" data-goto="home" aria-label="返回"><svg class="icon"><use href="#i-back"/></svg></button>
+              <span class="interview-status"><span class="status-wave"><i></i><i></i><i></i></span>正在面试中</span>
+              <button class="glass-icon" data-action="interview-menu" aria-label="更多"><svg class="icon"><use href="#i-menu"/></svg></button>
+            </header>
+
+            <div class="interview-content">
+              <div class="interviewer">
+                <div class="interviewer-glow"></div>
+                <svg class="interviewer-avatar" viewBox="0 0 120 120" aria-label="AI 面试官">
+                  <defs><radialGradient id="faceGlow" cx="50%" cy="35%" r="70%"><stop stop-color="#EAF6FF"/><stop offset="1" stop-color="#8CB5E8"/></radialGradient></defs>
+                  <circle cx="60" cy="60" r="58" fill="url(#faceGlow)" opacity=".95"/>
+                  <path d="M31 52c0-24 13-36 29-36s29 12 29 36c0 12-2 20-6 26l-3-18-12 6-8-7-8 7-12-6-3 18c-4-6-6-14-6-26Z" fill="#3B3540"/>
+                  <ellipse cx="60" cy="56" rx="22" ry="26" fill="#F1C7A8"/>
+                  <path d="M39 53c1-16 9-24 21-24s20 8 21 24c-6-8-13-11-21-11s-15 3-21 11Z" fill="#3B3540"/>
+                  <circle cx="52" cy="56" r="1.7" fill="#3B3540"/><circle cx="68" cy="56" r="1.7" fill="#3B3540"/>
+                  <path d="M56 68c2.5 2 5.5 2 8 0" stroke="#B86F66" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+                  <path d="M27 120c3-22 16-32 33-32s30 10 33 32Z" fill="#DCEAFF"/>
+                  <path d="M48 91l12 17 12-17" fill="#fff"/>
+                </svg>
+                <div class="sound-bar sound-left"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="sound-bar sound-right"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="interviewer-name">AI 面试官</div>
+
+              <div class="question-card">
+                <div class="question-icon"><svg class="icon"><use href="#i-mic"/></svg></div>
+                <div class="question-body">
+                  <p id="interviewQuestion">请介绍一下你的项目经验</p>
+                  <div class="speaking"><i></i><i></i><i></i><i></i><i></i> AI面试官正在语音中…</div>
+                </div>
+              </div>
+
+              <div class="record-card" id="recordCard">
+                <div class="record-wave" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+                <button class="record-btn" id="recordBtn" aria-label="暂停录音"><span></span></button>
+                <span class="record-time" id="recordTime">05:23</span>
+              </div>
+
+              <div class="answer-block">
+                <div class="answer-label"><strong>你的回答</strong><span id="answerCount">0/2000</span></div>
+                <div class="answer-box">
+                  <textarea id="answerInput" maxlength="2000" placeholder="请输入你的回答..."></textarea>
+                  <div class="answer-tools">
+                    <button data-tool="sample" aria-label="生成示例回答" title="生成示例回答"><svg class="icon"><use href="#i-wave"/></svg></button>
+                    <button data-tool="template" aria-label="插入回答模板" title="插入回答模板"><svg class="icon"><use href="#i-text"/></svg></button>
+                    <button data-tool="star" aria-label="查看回答框架" title="查看回答框架"><svg class="icon"><use href="#i-list"/></svg></button>
+                    <button data-tool="attach" aria-label="添加附件" title="添加附件"><svg class="icon"><use href="#i-paperclip"/></svg></button>
+                    <button class="submit-answer" data-tool="submit" aria-label="提交回答" title="提交回答"><svg class="icon"><use href="#i-plus"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========== 面试报告 ========== -->
+          <section class="screen" id="screen-report" data-screen="report">
+            <div class="scroll-area report-scroll">
+              <header class="report-header">
+                <button class="report-icon" data-goto="home" aria-label="返回"><svg class="icon"><use href="#i-back"/></svg></button>
+                <h2>面试结果报告</h2>
+                <button class="report-icon" id="exportBtn" aria-label="导出报告"><svg class="icon"><use href="#i-share"/></svg></button>
+              </header>
+
+              <div class="score-card">
+                <div class="score-heading"><strong>综合得分</strong><span class="info-dot">i</span></div>
+                <div class="gauge-wrap">
+                  <svg class="gauge" viewBox="0 0 240 150" aria-label="综合得分 87 分">
+                    <defs><linearGradient id="gaugeGradient" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#3E7BFF"/><stop offset="1" stop-color="#A66BFF"/></linearGradient></defs>
+                    <path id="gaugeTrack" d="M30 130 A90 90 0 1 1 210 130" fill="none" stroke="#ECEEF6" stroke-width="15" stroke-linecap="round"/>
+                    <path id="gaugeValue" d="M30 130 A90 90 0 1 1 210 130" fill="none" stroke="url(#gaugeGradient)" stroke-width="15" stroke-linecap="round"/>
+                  </svg>
+                  <div class="gauge-center"><strong id="scoreValue">87</strong><span>满分 100</span></div>
+                </div>
+              </div>
+
+              <div class="report-cols">
+                <div class="panel radar-panel">
+                  <div class="panel-heading"><strong>能力维度</strong><span class="info-dot">i</span></div>
+                  <div class="radar-wrap"><svg id="radarChart" viewBox="0 0 220 190" aria-label="能力维度雷达图"></svg></div>
+                </div>
+                <div class="panel dim-panel">
+                  <div class="panel-heading"><strong>维度得分</strong><button class="dim-filter" id="dimFilter">本次面试 <svg class="icon icon-sm"><use href="#i-chevron"/></svg></button></div>
+                  <div class="dim-list" id="dimList"></div>
+                </div>
+              </div>
+
+              <div class="panel note-panel">
+                <div class="panel-heading"><span class="heading-ico trophy"><svg class="icon"><use href="#i-trophy"/></svg></span><strong>表现亮点</strong></div>
+                <button class="note-row" data-detail="专业知识扎实，核心概念掌握准确；在追问中能快速回到关键结论。"><span class="check-dot"><svg class="icon"><use href="#i-check"/></svg></span><span>专业知识扎实，核心概念掌握准确</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+                <button class="note-row" data-detail="回答按背景、方案、结果展开，层次清晰，便于面试官跟随。"><span class="check-dot"><svg class="icon"><use href="#i-check"/></svg></span><span>逻辑清晰，分析问题有条理</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+                <button class="note-row" data-detail="语速稳定，观点明确，关键术语使用自然，整体表达易于理解。"><span class="check-dot"><svg class="icon"><use href="#i-check"/></svg></span><span>表达流畅，观点明确，易于理解</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+              </div>
+
+              <div class="panel note-panel">
+                <div class="panel-heading"><span class="heading-ico target"><svg class="icon"><use href="#i-target"/></svg></span><strong>改进建议</strong></div>
+                <button class="note-row warn" data-detail="建议用 3 秒停顿替代口头填充词，并在高压追问下先复述问题再作答。"><span class="check-dot"><svg class="icon"><use href="#i-check"/></svg></span><span>加强应变能力训练，提高临场发挥水平</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+                <button class="note-row warn" data-detail="补充 1-2 个真实案例，按照情境、任务、行动、结果的顺序展开。"><span class="check-dot"><svg class="icon"><use href="#i-check"/></svg></span><span>增加案例练习，提升实际问题解决能力</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+                <button class="note-row warn" data-detail="关键结论先行，细节按需补充，让回答更从容且更有重点。"><span class="check-dot"><svg class="icon"><use href="#i-check"/></svg></span><span>可适当优化答题语速，让表达更从容</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+              </div>
+
+              <div class="ai-review">
+                <div class="ai-review-head"><span><svg class="icon"><use href="#i-spark"/></svg> AI 评语</span><em><svg class="icon"><use href="#i-shield"/></svg> 可信度 高</em></div>
+                <p>整体表现良好，专业基础扎实，思维清晰，能够准确表达观点。在应变处理上还有提升空间，建议加强练习。继续保持！</p>
+              </div>
+
+              <button class="coach-btn" id="coachBtn"><svg class="icon"><use href="#i-spark"/></svg> 获取个性化面试辅导</button>
+              <div class="bottom-space"></div>
+            </div>
+          </section>
+
+          <!-- ========== 底部导航 ========== -->
+          <nav class="tab-bar" id="tabBar">
+            <button class="tab active" id="tabHome"><svg class="icon"><use href="#i-home"/></svg><span>首页</span></button>
+            <button class="tab" id="tabLearn"><svg class="icon"><use href="#i-book"/></svg><span>学习</span></button>
+            <button class="tab" id="tabThird"><svg class="icon"><use href="#i-chart"/></svg><span>报告</span></button>
+            <button class="tab" id="tabProfile"><svg class="icon"><use href="#i-user"/></svg><span>我的</span></button>
+          </nav>
+
+          <div class="home-indicator" aria-hidden="true"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+      <h3 id="modalTitle"></h3>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
